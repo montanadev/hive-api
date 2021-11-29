@@ -4,6 +4,10 @@ from hive.api.models.item import Item
 from hive.api.models.location import Location
 
 
+class ItemImageCreateRequestSerializer(serializers.Serializer):
+    image = serializers.CharField()
+
+
 class LocationCreateRequestSerializer(serializers.Serializer):
     name = serializers.CharField()
 

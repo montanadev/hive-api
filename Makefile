@@ -1,10 +1,13 @@
 .PHONY: run migrate shell
 
 run:
-	poetry run ./manage.py runserver
+	DEBUG=true CORS_ORIGIN_WHITELIST=http://localhost:3000 SECRET_KEY=secret DATABASE_URL=sqlite:///sqlite.db && \
+		poetry run ./manage.py runserver
 
 migrate:
-	poetry run ./manage.py migrate
+	DEBUG=true CORS_ORIGIN_WHITELIST=http://localhost:3000 SECRET_KEY=secret DATABASE_URL=sqlite:///sqlite.db && \
+	 	poetry run ./manage.py migrate
 
 shell:
-	poetry run ./manage.py shell
+	DEBUG=true CORS_ORIGIN_WHITELIST=http://localhost:3000 SECRET_KEY=secret DATABASE_URL=sqlite:///sqlite.db && \
+		poetry run ./manage.py shell

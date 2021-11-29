@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from hive.api.views.item import ItemDetailView, ItemListView
+from hive.api.views.item_image import ItemImageDetailView
 from hive.api.views.location import LocationListView
 from hive.api.views.print import print_handler
 
@@ -25,5 +26,6 @@ urlpatterns = [
     path("api/items/", ItemListView.as_view()),
     path("api/locations/", LocationListView.as_view()),
     path("api/items/<int:pk>", ItemDetailView.as_view()),
+    path("api/items/<int:pk>/image", ItemImageDetailView.as_view()),
     path("api/print", print_handler),
 ]
