@@ -1,0 +1,30 @@
+name: Build and push
+
+on: [ push ]
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps:
+      # Setup git + docker
+      - uses: actions/checkout@v2
+      - run: |
+          docker context create builders
+      - uses: docker/setup-buildx-action@v1
+        with:
+          endpoint: builders
+
+      # Push to registry
+      - name: Build and push to homelab docker
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: docker.montanadev.com/hive-api:${{ github.sha }},docker.montanadev.com/hive-api:latest
+
+      # Deploy
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_PRIVATE_CLUSTER }}
+        with:
+          args: set image deployment/hive-api hive-api=docker.montanadev.com/hive-api:${{ github.sha }}
