@@ -26,4 +26,4 @@ done
 lpstat -d -t
 
 # start the web app
-poetry run uvicorn app:app --host 0.0.0.0
+poetry run gunicorn hive.wsgi:app --bind 0.0.0.0
