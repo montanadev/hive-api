@@ -59,5 +59,5 @@ class ItemUpdateRequestSerializer(serializers.Serializer):
 
 
 class PrintRequestSerializer(serializers.Serializer):
-    upc = serializers.IntegerField()
+    upc = serializers.CharField()
     description = serializers.CharField()
