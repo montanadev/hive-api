@@ -51,7 +51,7 @@ class ItemCreateRequestSerializer(serializers.Serializer):
     description = serializers.CharField(allow_blank=True)
     name = serializers.CharField()
     print = serializers.BooleanField(default=False)
-    image = serializers.CharField(allow_blank=True)
+    image = serializers.CharField(allow_blank=True, allow_null=True)
 
 
 class ItemUpdateRequestSerializer(serializers.Serializer):
