@@ -23,28 +23,13 @@ class ItemSerializer(serializers.ModelSerializer):
     location_id = serializers.IntegerField(source="location.id")
     location = serializers.SerializerMethodField()
 
-    image = serializers.SerializerMethodField()
-    image_id = serializers.SerializerMethodField()
-
     @staticmethod
     def get_location(obj):
         return LocationSerializer(obj.location).data
 
-    @staticmethod
-    def get_image(obj):
-        if not obj.image:
-            return None
-        return obj.image.data
-
-    @staticmethod
-    def get_image_id(obj):
-        if not obj.image:
-            return None
-        return obj.image.id
-
     class Meta:
         model = Item
-        fields = "__all__"
+        fields = ("upc", "name", "description", "touched", "location", "location_id")
 
 
 class ItemCreateRequestSerializer(serializers.Serializer):
