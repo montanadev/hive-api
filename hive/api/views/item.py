@@ -19,7 +19,7 @@ from hive.api.utils import print_qr_label
 
 
 class ItemListView(ListCreateAPIView):
-    queryset = Item.objects.all().prefetch_related("location", "image")
+    queryset = Item.objects.all().prefetch_related("location")
     serializer_class = ItemSerializer
 
     def create(self, request, *args, **kwargs):
