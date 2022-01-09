@@ -11,7 +11,7 @@ shell:
 	source dev.env && poetry run ./manage.py shell
 
 test:
-	source dev.env && poetry run pytest --cov=hive
+	source dev.env && poetry run pytest --cov=hive --cov-report=xml
 
 cov-html:
 	source dev.env && poetry run pytest --cov=hive --cov-report html tests/ && \
