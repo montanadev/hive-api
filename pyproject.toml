@@ -19,6 +19,9 @@ gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 fourmat = "^0.10.1"
+pytest-django = "^4.5.2"
+pytest-env = "^0.6.2"
+pytest-cov = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

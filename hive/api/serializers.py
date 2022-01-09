@@ -29,18 +29,19 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ("upc", "name", "description", "touched", "location", "location_id")
+        fields = ("upc", "name", "description", "touched", "location", "location_id", "image")
 
 
 class ItemCreateRequestSerializer(serializers.Serializer):
-    description = serializers.CharField(allow_blank=True)
+    description = serializers.CharField(default='')
     name = serializers.CharField()
     print = serializers.BooleanField(default=False)
-    image = serializers.CharField(allow_blank=True, allow_null=True)
+    image = serializers.CharField(default='')
 
 
 class ItemUpdateRequestSerializer(serializers.Serializer):
-    location = serializers.CharField()
+    location = serializers.CharField(default='')
+    description = serializers.CharField(default='')
 
 
 class PrintRequestSerializer(serializers.Serializer):

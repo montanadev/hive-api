@@ -1,4 +1,6 @@
 .idea
+.coverage
+.pytest_cache
 __pycache__
 sqlite.db
 label.pdf
