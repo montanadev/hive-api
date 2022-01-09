@@ -26,6 +26,9 @@ class ItemImageDetailView(APIView):
     @staticmethod
     def delete(request, pk=None):
         item = get_object_or_404(Item, upc=pk)
-        item.image.delete()
+        if item.image:
+            item.image.delete()
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

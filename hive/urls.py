@@ -23,9 +23,13 @@ from hive.api.views.print import print_handler
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/items/", ItemListView.as_view(), name='item-list-view'),
-    path("api/items/<int:pk>", ItemDetailView.as_view(), name='item-detail-view'),
-    path("api/items/<int:pk>/image", ItemImageDetailView.as_view()),
+    path("api/items/", ItemListView.as_view(), name="item-list-view"),
+    path("api/items/<int:pk>", ItemDetailView.as_view(), name="item-detail-view"),
+    path(
+        "api/items/<int:pk>/image",
+        ItemImageDetailView.as_view(),
+        name="item-image-detail-view",
+    ),
     path("api/locations/", LocationListView.as_view()),
     path("api/print", print_handler),
 ]
