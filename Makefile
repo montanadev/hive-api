@@ -1,4 +1,5 @@
 .PHONY: run migrate shell test-cov-html test
+SHELL:=/bin/bash
 
 run:
 	source dev.env && poetry run ./manage.py runserver

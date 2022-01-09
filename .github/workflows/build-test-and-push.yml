@@ -23,6 +23,7 @@ jobs:
           make test
 
   build-and-push:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
