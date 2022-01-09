@@ -4,4 +4,7 @@
 __pycache__
 sqlite.db
 label.pdf
+<<<<<<< HEAD
 coverage.xml
+=======
+>>>>>>> 1cbdba218f01555ccb454d444b387f98f00e61e2

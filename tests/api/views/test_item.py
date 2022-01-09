@@ -14,7 +14,7 @@ create_item_payloads = [
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("create_payload,expected", create_item_payloads)
-def test_create_item(create_payload, expected, client):
+def test_item_create(create_payload, expected, client):
     response = client.post(reverse("item-list-view"), create_payload, format="json")
     assert_dict_in(expected, response.json())
     assert response.status_code == status.HTTP_201_CREATED
@@ -22,7 +22,7 @@ def test_create_item(create_payload, expected, client):
 
 @pytest.mark.django_db
 @patch("hive.api.utils.check_call", lambda x: None)
-def test_create_item_and_print(client):
+def test_item_create_and_print(client):
     response = client.post(
         reverse("item-list-view"), {"name": "name", "print": True}, format="json"
     )
@@ -31,6 +31,20 @@ def test_create_item_and_print(client):
 
 @pytest.mark.django_db
 def test_create_item_and_image(client):
+    response = client.post(
+        reverse("item-list-view"),
+        {"name": "item", "image": "sample_image"},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+
+    assert_dict_in({"name": "item"}, response.json())
+    image = ItemImage.objects.get(id=response.json()["image"])
+    assert image.data == "sample_image"
+
+
+@pytest.mark.django_db
+def test_item_create_image(client):
     response = client.post(
         reverse("item-list-view"),
         {"name": "item", "image": "sample_image"},
@@ -59,11 +73,9 @@ def test_delete_item(client, item):
 @pytest.mark.django_db
 def test_update_item(client, item):
     Location.objects.create(name="The fun zone")
-
     response = client.put(
         reverse("item-detail-view", args=(item["upc"],)),
         {"description": "updated description", "location": "The fun zone"},
-        format="json",
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["description"] == "updated description"

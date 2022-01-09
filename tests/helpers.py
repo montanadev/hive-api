@@ -1,6 +1,8 @@
 from urllib.parse import urlencode
 
+import pytest
 from django.urls import reverse as django_reverse
+from rest_framework.test import APIClient
 
 
 def reverse(*args, query_params=None, **kwargs):
@@ -22,3 +24,8 @@ def assert_dict_in(needles, haystack):
     for k, v in needles.items():
         assert k in haystack
         assert haystack[k] == v
+
+
+@pytest.fixture()
+def client():
+    return APIClient()
