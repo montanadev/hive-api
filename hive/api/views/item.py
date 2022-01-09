@@ -48,15 +48,19 @@ class ItemListView(ListCreateAPIView):
 
 class ItemDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
     def update(self, request, *args, **kwargs):
         serializer = ItemUpdateRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        location = get_object_or_404(Location, name=serializer.data["location"])
-
         item = self.get_object()
-        item.location = location
+
+        if serializer.validated_data['location']:
+            location = get_object_or_404(Location, name=serializer.data["location"])
+            item.location = location
+
+        item.description = serializer.validated_data['description'] or item.description
         item.touched += 1
         item.save()
 

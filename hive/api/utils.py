@@ -1,4 +1,4 @@
-import subprocess as proc
+from subprocess import check_call
 from datetime import datetime
 
 import qrcode
@@ -10,7 +10,6 @@ from reportlab.pdfgen import canvas
 
 def print_qr_label(upc, description):
     timestamp = datetime.now().strftime("%m.%d.%Y %H:%M:%S%p")
-
     text = f"{upc}\n{description}\n{timestamp}"
 
     LABEL_SIZE = (1.125 * inch, 3.25 * inch)
@@ -73,14 +72,9 @@ def print_qr_label(upc, description):
 
         c.restoreState()
 
-    # TODO: top/bottom margin
     textWidth = LABEL_SIZE[1] - qr_size - leftMargin - item_spacing + 10
     wrappedTextBox(c, text, (textWidth, LABEL_SIZE[0]), "Helvetica", 10)
 
-    # save label pdf file
+    # save file and call print on it
     c.save()
-
-    # print
-    print("Printing label...")
-    proc.check_call(["lp", "label.pdf"])
-    print("Done")
+    check_call(["lp", "label.pdf"])
