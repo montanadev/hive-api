@@ -10,5 +10,5 @@ class Item(models.Model):
     description = models.TextField()
     touched = models.IntegerField(default=0)
 
-    location = models.ForeignKey(Location, null=True, on_delete=models.SET_NULL)
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL)
     image = models.ForeignKey(ItemImage, null=True, on_delete=models.SET_NULL)
