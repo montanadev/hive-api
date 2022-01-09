@@ -1,5 +1,4 @@
-.PHONY: run migrate shell cov-html
-
+.PHONY: run migrate shell test-cov-html test
 
 run:
 	source dev.env && poetry run ./manage.py runserver
@@ -10,6 +9,9 @@ migrate:
 shell:
 	source dev.env && poetry run ./manage.py shell
 
+test:
+	source dev.env && poetry run pytest --cov=hive
+
 cov-html:
-	poetry run pytest --cov=hive --cov-report html tests/ && \
+	source dev.env && poetry run pytest --cov=hive --cov-report html tests/ && \
 		open htmlcov/index.html
