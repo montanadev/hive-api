@@ -9,6 +9,7 @@ from rest_framework.response import Response
 
 from hive.api.models.item import Item
 from hive.api.models.item_image import ItemImage
+from hive.api.models.item_transition import ItemTransition
 from hive.api.models.location import Location, get_default_new_item_location
 from hive.api.serializers import (
     ItemCreateRequestSerializer,
@@ -57,7 +58,12 @@ class ItemDetailView(RetrieveUpdateDestroyAPIView):
         item = self.get_object()
 
         if serializer.validated_data['location']:
-            location = get_object_or_404(Location, name=serializer.data["location"])
+            location: Location = get_object_or_404(Location, name=serializer.data["location"])
+            
+            # the item is moving locations, record the change
+            if location.id != item.location.id:
+                ItemTransition.objects.create(item=item, from_location=item.location, to_location=location)
+
             item.location = location
 
         item.description = serializer.validated_data['description'] or item.description

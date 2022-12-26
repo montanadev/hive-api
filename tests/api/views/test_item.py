@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 from rest_framework import status
 
-from hive.api.models import ItemImage, Location
+from hive.api.models import ItemImage, Location, ItemTransition
 from tests.helpers import assert_dict_in, reverse
 
 create_item_payloads = [
@@ -79,3 +79,6 @@ def test_update_item(client, item):
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["description"] == "updated description"
+    transition = ItemTransition.objects.get(item=response.json()["upc"])
+    assert transition.from_location.name == "intake"
+    assert transition.to_location.name == "The fun zone"
